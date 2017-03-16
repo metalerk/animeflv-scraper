@@ -11,20 +11,26 @@ class BotAnimeFLV:
         self.prefix = "http://animeflv.net"
 
     def get_last_episodes(self):
-        main_div = self.parser.find_all("a", class_="fa-play")
+        main_div = self.parser.find("ul", class_="ListEpisodios AX Rows A06 C04 D03")
+        cards = main_div.find_all("a", class_="fa-play")
         last_episodes_list = list()
 
-        for card in main_div:
-            serie = dict()
-            image_span = card.find_all("span", class_="Image")
-            print(image_span)
-            #image_metadata = image_span.find_all("img")
+        for card in cards:
+            url = self.prefix + card['href']
+            title = card.find_all("strong", class_="Title")
+            title = title[0].text
+            episode = card.find_all("span", class_="Capi")
+            episode = episode[0].text
+            image = card.find_all("img")
+            image = self.prefix + image[0]['src']
 
-            #image = image_metadata[0]
+            aux = {
+                "title" : title,
+                "episode" : episode,
+                "image" : image,
+                "url" : url
+            }
 
-            #serie['image'] = self.prefix + image['src']
-            #serie['title'] = image['alt']
-
-            last_episodes_list.append(serie)
+            last_episodes_list.append(aux)
 
         return last_episodes_list
