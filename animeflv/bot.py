@@ -21,6 +21,7 @@ class BotAnimeFLV:
             title = title[0].text
             episode = card.find_all("span", class_="Capi")
             episode = episode[0].text
+            episode = int(episode.split(" ")[1])
             image = card.find_all("img")
             image = self.prefix + image[0]['src']
 
