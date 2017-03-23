@@ -44,5 +44,25 @@ class Mongo:
         except Exception as err:
             print("Error: {}".format(err))
 
+    def search_all(self, data=None, action="WRITE", flush=False):
+
+        try:
+            search_all_collection = self.__database['search_all']
+
+            if "WRITE" in action and data is not None:
+                search_all_collection.insert(doc_or_docs=data)
+                return True
+            elif "FIND" in action and data is not None:
+                search_all_collection.find(data)
+                return True
+            elif flush and data is None:
+                search_all_collection.delete_many({})
+                return True
+            else:
+                return False
+
+        except Exception as err:
+            print("Error: {}".format(err))
+
     def __del__(self):
         self.__mongo.close()
