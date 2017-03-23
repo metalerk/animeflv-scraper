@@ -10,7 +10,7 @@ class TestBot(unittest.TestCase):
         self.assertEqual(type(last_episodes), list)
         self.assertGreater(last_episodes.__len__(), 0)
         #response = json.dumps(last_episodes)
-        #pprint(last_episodes)
+        pprint(last_episodes)
 
 if __name__ == '__main__':
     unittest.main()
